@@ -379,7 +379,14 @@ class TestAdvancedChatAppGeneratorInternals:
             workflow_run_id="run-id",
         )
 
-        workflow = SimpleNamespace(id="wf-1", tenant_id="tenant", features={"feature": True}, features_dict={})
+        workflow = SimpleNamespace(
+            id="wf-1",
+            tenant_id="tenant",
+            features={"feature": True},
+            features_dict={},
+            environment_variables=[],
+            conversation_variables=[],
+        )
         conversation = SimpleNamespace(id="conv-1", mode=AppMode.ADVANCED_CHAT, override_model_configs=None)
         message = SimpleNamespace(
             id="msg-1",
@@ -477,7 +484,14 @@ class TestAdvancedChatAppGeneratorInternals:
             workflow_run_id="run-id",
         )
 
-        workflow = SimpleNamespace(id="wf-2", tenant_id="tenant", features={}, features_dict={})
+        workflow = SimpleNamespace(
+            id="wf-2",
+            tenant_id="tenant",
+            features={},
+            features_dict={},
+            environment_variables=[],
+            conversation_variables=[],
+        )
         conversation = SimpleNamespace(id="conv-2", mode=AppMode.ADVANCED_CHAT, override_model_configs=None)
         message = SimpleNamespace(
             id="msg-2",
@@ -947,7 +961,13 @@ class TestAdvancedChatAppGeneratorInternals:
         with pytest.raises(GenerateTaskStoppedError):
             generator._handle_advanced_chat_response(
                 application_generate_entity=application_generate_entity,
-                workflow=WorkflowSnapshot(id="wf", tenant_id="tenant", features_dict={}),
+                workflow=WorkflowSnapshot(
+                    id="wf",
+                    tenant_id="tenant",
+                    features_dict={},
+                    environment_variables=(),
+                    conversation_variables=(),
+                ),
                 queue_manager=SimpleNamespace(),
                 conversation=ConversationSnapshot(id="conv", mode=AppMode.ADVANCED_CHAT),
                 message=MessageSnapshot(
@@ -995,7 +1015,13 @@ class TestAdvancedChatAppGeneratorInternals:
             with pytest.raises(ValueError, match="other error"):
                 generator._handle_advanced_chat_response(
                     application_generate_entity=application_generate_entity,
-                    workflow=WorkflowSnapshot(id="wf", tenant_id="tenant", features_dict={}),
+                    workflow=WorkflowSnapshot(
+                        id="wf",
+                        tenant_id="tenant",
+                        features_dict={},
+                        environment_variables=(),
+                        conversation_variables=(),
+                    ),
                     queue_manager=SimpleNamespace(),
                     conversation=ConversationSnapshot(id="conv", mode=AppMode.ADVANCED_CHAT),
                     message=MessageSnapshot(
